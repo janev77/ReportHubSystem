@@ -2,11 +2,14 @@
 
 namespace App\Filament\Resources\Announcements\Schemas;
 
+use App\Models\User;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Facades\Auth;
 
 class AnnouncementForm
 {
@@ -19,23 +22,35 @@ class AnnouncementForm
                 Textarea::make('content')
                     ->required()
                     ->columnSpanFull(),
-                TextInput::make('category_id')
+                Select::make('category_id')
                     ->required()
-                    ->numeric(),
+                    ->relationship('category', 'name'),
                 TextInput::make('created_by')
                     ->required()
-                    ->numeric(),
+                    ->default(fn () => Auth::user()->email)
+                    ->disabled()
+                    ->dehydrated(),
                 Toggle::make('is_active')
                     ->required(),
                 Toggle::make('is_pinned')
-                    ->required(),
-                TextInput::make('status')
                     ->required()
-                    ->default('draft'),
-                TextInput::make('target')
+                    ->default(false),
+                Select::make('status')
+                    ->options([
+                        'important' => 'Important',
+                        'regular' => 'Regular',
+                        '' => 'None',
+                    ])
+                    ->default('regular')
+                    ->dehydrated(),
+                Select::make('target')
                     ->required()
-                    ->default('all'),
-                DateTimePicker::make('publish_at'),
+                    ->multiple()
+                    ->options(fn () => ['all' => 'All Employees'] + User::pluck('email', 'id')->toArray())
+                    ->default(['all'])
+                    ->searchable()
+                    ->dehydrated(),
+//                DateTimePicker::make('publish_at'),
                 DateTimePicker::make('expire_at'),
             ]);
     }

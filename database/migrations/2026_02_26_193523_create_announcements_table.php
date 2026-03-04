@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('title');
             $table->longText('content');
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
+            $table->string('created_by'); // email string
             $table->boolean('is_active')->default(true);
             $table->boolean('is_pinned')->default(false);
-            $table->enum('status', ['draft', 'published', 'scheduled', 'archived'])->default('draft');
-            $table->enum('target', ['all', 'specific'])->default('all');
+            $table->enum('status', ['important', 'regular'])->nullable();
+            $table->json('target')->default(json_encode(['all']));
             $table->timestamp('publish_at')->nullable();
             $table->timestamp('expire_at')->nullable();
             $table->timestamps();

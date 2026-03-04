@@ -32,6 +32,7 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->globalSearch(false)
             ->brandName('ReportHubSystem')
             ->navigationGroups([
                 NavigationGroup::make('Communications'),

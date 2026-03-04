@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Announcements\Tables;
 
+use App\Models\User;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -18,23 +19,35 @@ class AnnouncementsTable
             ->columns([
                 TextColumn::make('title')
                     ->searchable(),
-                TextColumn::make('category_id')
-                    ->numeric()
+                TextColumn::make('category.name')
+                    ->label('Category')
                     ->sortable(),
                 TextColumn::make('created_by')
-                    ->numeric()
-                    ->sortable(),
+                    ->label('Created By')
+                    ->searchable(),
                 IconColumn::make('is_active')
                     ->boolean(),
                 IconColumn::make('is_pinned')
                     ->boolean(),
                 TextColumn::make('status')
+                    ->formatStateUsing(fn ($state) => match($state) {
+                        'important' => 'Important',
+                        'regular' => 'Regular',
+                        default => 'None',
+                    })
                     ->searchable(),
                 TextColumn::make('target')
-                    ->searchable(),
-                TextColumn::make('publish_at')
-                    ->dateTime()
-                    ->sortable(),
+                    ->label('Target')
+                    ->formatStateUsing(function ($state) {
+                        if (empty($state)) return 'All Employees';
+                        $decoded = is_array($state) ? $state : json_decode($state, true);
+                        if (empty($decoded) || in_array('all', $decoded)) return 'All Employees';
+                        $count = count($decoded);
+                        return "{$count} " . str('Employee')->plural($count);
+                    }),
+//                TextColumn::make('publish_at')
+//                    ->dateTime()
+//                    ->sortable(),
                 TextColumn::make('expire_at')
                     ->dateTime()
                     ->sortable(),

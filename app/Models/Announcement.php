@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Announcement extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
     protected $fillable = [
         'title',
         'content',
@@ -16,12 +19,17 @@ class Announcement extends Model
         'publish_at',
         'expire_at',
         'is_active',
+        'is_pinned',
+        'status',
+        'target',
     ];
 
     protected $casts = [
         'publish_at' => 'datetime',
         'expire_at' => 'datetime',
         'is_active' => 'boolean',
+        'is_pinned' => 'boolean',
+        'target' => 'array',
     ];
 
     public function category()

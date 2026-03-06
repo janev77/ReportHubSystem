@@ -35,7 +35,7 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::Emerald,
             ])
             ->globalSearch(false)
-            ->brandName('ReportHubSystem')
+            ->brandName('ReportHubSystem Admin')
             ->navigationGroups([
                 NavigationGroup::make('Communications'),
                 NavigationGroup::make('Administration'),

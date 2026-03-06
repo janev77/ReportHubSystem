@@ -38,10 +38,25 @@ class AnnouncementsTable
                 TextColumn::make('target')
                     ->label('Target')
                     ->formatStateUsing(function ($state) {
-                        if (empty($state)) return 'All Employees';
-                        $decoded = is_array($state) ? $state : json_decode($state, true);
-                        if (empty($decoded) || in_array('all', $decoded)) return 'All Employees';
+
+                        if (empty($state)) {
+                            return 'All Employees';
+                        }
+
+                        if (is_array($state)) {
+                            $decoded = $state;
+                        } elseif (is_string($state)) {
+                            $decoded = json_decode($state, true);
+                        } else {
+                            $decoded = [$state]; // convert int to array
+                        }
+
+                        if (empty($decoded) || in_array('all', $decoded)) {
+                            return 'All Employees';
+                        }
+
                         $count = count($decoded);
+
                         return "$count " . str('Employee')->plural($count);
                     }),
 //                TextColumn::make('publish_at')

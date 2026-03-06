@@ -34,10 +34,16 @@ class AnnouncementInfolist
                 TextEntry::make('target')
                     ->label('Target')
                     ->formatStateUsing(function ($state) {
-                        if (!$state) return 'All Employees';
-                        $decoded = is_array($state) ? $state : json_decode($state, true);
-                        if (!$decoded || in_array('all', $decoded)) return 'All Employees';
-                        return User::whereIn('id', $decoded)->pluck('email')->join(', ');
+
+                        $decoded = (array) $state;
+
+                        if (empty($decoded) || in_array('all', $decoded)) {
+                            return 'All Employees';
+                        }
+
+                        return User::whereIn('id', $decoded)
+                            ->pluck('email')
+                            ->join(', ');
                     }),
 //                TextEntry::make('publish_at')
 //                    ->dateTime()

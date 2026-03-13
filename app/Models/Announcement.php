@@ -24,6 +24,10 @@ class Announcement extends Model
         'target',
     ];
 
+    protected $attributes = [
+        'target' => '["all"]',
+    ];
+
     protected $casts = [
         'publish_at' => 'datetime',
         'expire_at' => 'datetime',

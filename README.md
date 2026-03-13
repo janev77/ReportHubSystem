@@ -1,5 +1,3 @@
-
-
 ## System for internal announcements in a company	
 Full Stack Laravel application for creating and distributing internal announcements to employees. Supports categories, targeted users, timed announcements, and a notification system.
 
@@ -89,3 +87,41 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Docker setup
+
+This project now includes:
+- `Dockerfile` for Laravel + Apache + Vite build
+- `docker-compose.yml` for the app and MySQL 8.0
+- `.env.docker.example` with Docker-ready app/database settings
+
+### First time start with Docker
+
+1. Build and start the containers.
+2. Run the migrations and seed the database.
+3. Open the app at `http://localhost:8000`.
+
+```powershell
+docker compose up -d --build
+docker compose exec app php artisan migrate --seed
+```
+
+### Useful Docker commands
+
+```powershell
+docker compose down
+docker compose down -v
+docker compose exec app php artisan test
+```
+
+### Docker database connection
+
+The Laravel app connects to the MySQL container with these values:
+- Host: `mysql`
+- Port: `3306`
+- Database: `laravel_db`
+- Username: `laravel_user`
+- Password: `password`
+
+If you want different values, edit `.env.docker.example` and `docker-compose.yml` together before running the containers.
+

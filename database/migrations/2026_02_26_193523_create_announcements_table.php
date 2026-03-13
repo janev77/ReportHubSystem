@@ -20,7 +20,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->boolean('is_pinned')->default(false);
             $table->enum('status', ['important', 'regular'])->nullable();
-            $table->json('target')->default(json_encode(['all']));
+            $table->json('target');
             $table->timestamp('publish_at')->nullable();
             $table->timestamp('expire_at')->nullable();
             $table->timestamps();

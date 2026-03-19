@@ -18,10 +18,13 @@ RUN apt-get update \
         libicu-dev \
         libzip-dev \
         libsqlite3-dev \
+        libpq-dev \
     && docker-php-ext-install \
         bcmath \
         intl \
         pdo_mysql \
+        pdo_pgsql \
+        pgsql \
         pdo_sqlite \
         zip \
     && a2enmod rewrite headers \
@@ -44,5 +47,4 @@ COPY --from=assets /app/public/build ./public/build
 
 EXPOSE 80
 
-CMD ["apache2-foreground"]
-
+CMD php artisan migrate --force && apache2-foreground

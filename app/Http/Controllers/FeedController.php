@@ -20,7 +20,7 @@ class FeedController extends Controller
                 $query->whereJsonContains('target', 'all')
                     ->orWhereJsonContains('target', (string) auth()->id());
             })
-            ->orderByRaw("JSON_EXTRACT(target, '$') = '[\"all\"]' DESC")
+            ->orderByRaw("CASE WHEN target::jsonb @> '\"all\"' THEN 0 ELSE 1 END")
             ->latest()
             ->paginate(10);
 

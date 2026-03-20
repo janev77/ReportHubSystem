@@ -5,23 +5,10 @@ namespace App\Listeners;
 use App\Events\AnnouncementCreated;
 use App\Mail\AnnouncementNotification;
 use App\Models\User;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
-class SendAnnouncementEmailNotification implements ShouldQueue
+class SendAnnouncementEmailNotification
 {
-    use InteractsWithQueue;
-
-    /**
-     * The number of seconds to wait before retrying the job.
-     */
-    public int $retryAfter = 3600;
-
-    /**
-     * The number of times the job may be attempted.
-     */
-    public int $tries = 3;
 
     /**
      * Handle the event.
@@ -31,10 +18,20 @@ class SendAnnouncementEmailNotification implements ShouldQueue
         $announcement = $event->announcement;
         $recipients = $this->getRecipients($announcement);
 
-        // Queue emails to avoid blocking the request
+        // Send emails synchronously without queue
+        // Note: This will block the request until all emails are sent
         foreach ($recipients as $recipient) {
-            Mail::to($recipient->email)
-                ->queue(new AnnouncementNotification($announcement));
+            try {
+                Mail::to($recipient->email)
+                    ->send(new AnnouncementNotification($announcement));
+            } catch (\Exception $e) {
+                // Log email sending errors silently
+                \Illuminate\Support\Facades\Log::error('Failed to send announcement email', [
+                    'recipient' => $recipient->email,
+                    'announcement_id' => $announcement->id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
         }
     }
 

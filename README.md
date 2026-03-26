@@ -1,46 +1,64 @@
-## System for internal announcements in a company	
-Full Stack Laravel application for creating and distributing internal announcements to employees. Supports categories, targeted users, timed announcements, and a notification system.
+# Report Hub System
+<hr>
 
-### 221258 Александар Јанев
-### 221277 Љупчо Јованов
-<br>
-<br>
+## Overview
+Full Stack Laravel application for creating and distributing 
+internal announcements to employees in a company. The app supports different categories, targeted users, 
+timed announcements and email notification system.
+<hr>
 
-<strong>How to start the project:</strong>
+## Prerequisites
 
+- PHP 8.0 or higher
+- Composer
+- MySQL 8.0 or higher
+- Docker (optional, for containerized setup)
 
-composer install <br>
-copy .env.example .env <br>
-php artisan key:generate <br>
-php artisan migrate <br>
-php artisan db:seed <br>
-php artisan serve <br>
-<br><br>
-<strong>Login info</strong>
+<hr>
 
-email: admin@company.com <br>
+## Getting started
+
+1. Clone the repository:
+```
+git clone https://github.com/ljupce99/ReportHubSystem.git
+cd ReportHubSystem
+```
+2. Install composer dependencies:
+```
+composer install
+```
+
+3. Add environment variables:
+```
+copy .env.example .env
+```
+- Set database connection settings (DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD) according to your local MySQL setup.
+- You can also set the MAIL settings if you want to test email notifications.
+
+4. Generate application key:
+```
+php artisan key:generate
+```
+
+5. Migrate the database and seed with initial data:
+```
+php artisan migrate --seed
+```
+
+6. Start the server and go to `http://localhost:8000` in your browser:
+```
+php artisan serve
+```
+
+Test the functionalities using the seeded admin user or create new users and announcements through the UI.
+<br><br> email: admin@company.com <br>
 password: password
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
+<hr>
 
 ## Docker setup
 
-This project now includes:
+This project also includes:
 - `Dockerfile` for Laravel + Apache + Vite build
 - `docker-compose.yml` for the app and MySQL 8.0
 - `.env.docker.example` with Docker-ready app/database settings
@@ -75,3 +93,23 @@ The Laravel app connects to the MySQL container with these values:
 
 If you want different values, edit `.env.docker.example` and `docker-compose.yml` together before running the containers.
 
+<hr>
+
+## Features
+- User authentication and role-based access control (/admin for admin /feed for employees)
+- CRUD announcements with categories and target users
+- Schedule announcements to be published at specific times
+- Email notifications when new announcements are published
+- Responsive design for desktop and mobile
+- Admin panel with announcements, categories and user engagement
+- Search and filter announcements by category, date, and target users
+- User management for admins to create and manage employee accounts
+
+<hr>
+<br>
+<br>
+
+### Made by:
+- 221258 Александар Јанев
+- 221277 Љупчо Јованов<br><br>
+for the course "Implementation of free and open source systems" at Faculty of Computer Science and Engineering - Skopje

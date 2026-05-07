@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: janev77/reporthub-frontend:latest
+          image: janev77/reporthub-frontend:5ff1a08458e8b6a872320631b4236e361be04480
           imagePullPolicy: Always
           ports:
             - containerPort: 3000

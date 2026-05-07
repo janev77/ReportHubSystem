@@ -16,7 +16,7 @@ timed announcements and email notification system.
 
 <hr>
 
-## Getting started
+## Getting started (Local)
 
 1. Clone the repository:
 ```
@@ -77,9 +77,7 @@ docker compose exec app php artisan migrate --seed
 ### Useful Docker commands
 
 ```powershell
-docker compose down
 docker compose down -v
-docker compose exec app php artisan test
 ```
 
 ### Docker database connection
@@ -107,9 +105,8 @@ If you want different values, edit `.env.docker.example` and `docker-compose.yml
 
 <hr>
 <br>
-<br>
 
-### Made by:
-- 221258 Александар Јанев
-- 221277 Љупчо Јованов<br><br>
-for the course "Implementation of free and open source systems" at Faculty of Computer Science and Engineering - Skopje
+### Implemented CI/CD pipeline with Github Actions
+For the course "Continuous Integration and Delivery" at Faculty of Computer Science and Engineering - Skopje
+
+#### Aleksandar Janev - 221258
